@@ -42,7 +42,7 @@ function App() {
         ?
         <Agenda 
           listaCitas={listaCitas}
-                
+          eliminarCita={eliminarCita}      
         />
         :
         <div>

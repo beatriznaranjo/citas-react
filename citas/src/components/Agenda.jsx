@@ -1,7 +1,7 @@
 import React from "react"
 import PacienteCita from './PacienteCita'
 
-export default function Agenda({listaCitas}) {
+export default function Agenda({listaCitas, eliminarCita}) {
     const agenda = listaCitas.map((cita) => {
         return <PacienteCita
                     key={cita.id}
@@ -12,7 +12,7 @@ export default function Agenda({listaCitas}) {
                     email={cita.email}
                     motivo={cita.motivo}
                     fecha={cita.fecha}
-                                        
+                    eliminarCita={eliminarCita}                    
                     />
     })
 

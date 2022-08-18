@@ -88,8 +88,7 @@ export default function Form({listaCitas, setListaCitas}) {
                                     name="especie"
                                     value="otro"
                                     onChange={(e)=>{setEspecie(e.target.value)}}
-                                    >
-                                </input>
+                                />
                                 <label htmlFor="otro" className="mx-1 text-white">Otr@</label>
                             </div>
                         </div>
