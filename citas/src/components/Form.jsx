@@ -1,7 +1,7 @@
-import React, {useState} from "react"
+import React, {useState, useEffect} from "react"
 import {nanoid} from "nanoid"
 
-export default function Form({listaCitas, setListaCitas}) {
+export default function Form({listaCitas, setListaCitas, editando, setEditando, citaActual, setCitaActual}) {
     
   const [ paciente, setPaciente ] = useState("")
   const [ especie, setEspecie ] = useState("")
@@ -10,19 +10,8 @@ export default function Form({listaCitas, setListaCitas}) {
   const [ motivo, setMotivo ] = useState("")
   const [ fecha, setFecha ] = useState("")
   
-  const agendarCita = (e) => {
-    e.preventDefault()
-    const cita = {
-      id: nanoid(),
-      paciente,
-      especie,
-      propietario, 
-      email,
-      motivo,
-      fecha
-    }
-    setListaCitas([...listaCitas, cita])
-    console.log('Cita guardada correctamente')
+  
+  const cleanStates = () => {
     setPaciente("")
     setEspecie("")
     setPropietario("")
@@ -31,10 +20,34 @@ export default function Form({listaCitas, setListaCitas}) {
     setFecha("")
   }
 
-    return (
-        <form className="w-full max-w-lg" onSubmit={agendarCita}>
+  const agendarCita = (e) => {
+    e.preventDefault()
+    const cita = ({
+      id: nanoid(),
+      paciente,
+      especie,
+      propietario, 
+      email,
+      motivo,
+      fecha
+    })
+    setListaCitas([...listaCitas, cita])
+    console.log('Cita guardada correctamente')
+    cleanStates()
+  }
 
-          <h2 className="text-center mt-2 text-white mt-4 mb-7 text-3xl font-medium">Agendar una cita</h2>          
+  const actualizarCita = (e) => {
+    e.preventDefault()
+    console.log("cita actualizada")
+    setEditando(false)
+    cleanStates()
+    setCitaActual({})
+  }
+
+    return (
+        <form className="w-full max-w-lg" onSubmit={editando ? actualizarCita : agendarCita}>
+
+          <h2 className="text-center mt-2 text-white mt-4 mb-7 text-3xl font-medium">{editando ? "Editar cita" : "Agendar nueva cita"}</h2>          
 
         <div className="flex flex-wrap -mx-3 mb-6">
           {/* Paciente */}
@@ -65,8 +78,8 @@ export default function Form({listaCitas, setListaCitas}) {
                                 <input 
                                     type="radio" 
                                     id="perro" 
-                                    name="especie"
                                     value="perro"
+                                    checked={especie==="perro"}
                                     onChange={(e)=>{setEspecie(e.target.value)}}
                                 />
                                 <label htmlFor="perro" className="mx-1 text-white">Perr@</label>
@@ -75,8 +88,8 @@ export default function Form({listaCitas, setListaCitas}) {
                                 <input 
                                     type="radio" 
                                     id="gato" 
-                                    name="especie"
                                     value="gato"
+                                    checked={especie==="gato"}
                                     onChange={(e)=>{setEspecie(e.target.value)}}    
                                 />
                                 <label htmlFor="gato" className="mx-1 text-white">Gat@</label>
@@ -84,9 +97,9 @@ export default function Form({listaCitas, setListaCitas}) {
                             <div className="mx-2">
                                 <input 
                                     type="radio" 
-                                    id="otro" 
-                                    name="especie"
+                                    id="otro"                                   
                                     value="otro"
+                                    checked={especie==="otro"}
                                     onChange={(e)=>{setEspecie(e.target.value)}}
                                 />
                                 <label htmlFor="otro" className="mx-1 text-white">Otr@</label>
@@ -172,7 +185,7 @@ export default function Form({listaCitas, setListaCitas}) {
               <input 
               className="bg-teal-600 hover:bg-teal-900 text-white font-bold py-2 px-4 border rounded m-auto"
               type="submit"
-              value="Agendar cita"
+              value={editando ? "Guardar cambios" : "Agendar cita"}
               />     
         </div>
         

@@ -11,13 +11,20 @@ function App() {
     [] 
   )
 
+  const [ editando, setEditando ] = useState(false)
+  const [ citaActual, setCitaActual ] = useState({})
+
   useEffect(() => {
     localStorage.setItem("citas", JSON.stringify(listaCitas))
   }, [listaCitas])
 
-  const eliminarCita = (event, id) => {
+  const eliminarCita = (id) => {
     setListaCitas(citasAntiguas => citasAntiguas.filter(cita => cita.id !== id))    
 }
+
+  const editarCita = (id) => {
+    setEditando(true)
+  }
 
 
 
@@ -32,6 +39,10 @@ function App() {
                   <Form
                   listaCitas={listaCitas}
                   setListaCitas={setListaCitas}
+                  editando={editando}
+                  setEditando={setEditando}
+                  citaActual={citaActual}
+                  setCitaActual={setCitaActual}
                   />
                 </div>
         </div>
@@ -42,7 +53,9 @@ function App() {
         ?
         <Agenda 
           listaCitas={listaCitas}
-          eliminarCita={eliminarCita}      
+          eliminarCita={eliminarCita}   
+          editarCita={editarCita}   
+          citaActual={citaActual}
         />
         :
         <div>

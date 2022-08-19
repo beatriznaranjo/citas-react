@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PacienteCita({id, paciente, especie, propietario, email, motivo, fecha, eliminarCita}) {
+export default function PacienteCita({id, paciente, especie, propietario, email, motivo, fecha, eliminarCita, editarCita, citaActual}) {
     let imageUrl = ""
     if (especie === "perro") {
         imageUrl = "./src/assets/dog.png"
@@ -30,7 +30,7 @@ export default function PacienteCita({id, paciente, especie, propietario, email,
                 
                     <button
                         className="text-black hover:text-red-600 rounded font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
-                        onClick={(event) => eliminarCita(event, id)}
+                        onClick={() => eliminarCita(id)}
                     >
                         Eliminar
                     </button>
@@ -39,6 +39,7 @@ export default function PacienteCita({id, paciente, especie, propietario, email,
                 <div className="w-1/2 text-center">
                     <button
                         className="text-black hover:bg-teal-700 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
+                        onClick={() => editarCita(id)}
                     >
                         Editar
                     </button>
