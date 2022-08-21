@@ -5,18 +5,22 @@ import Agenda from './components/Agenda'
 
 function App() {
 
+  //const [listaCitas, setListaCitas] = useState([])
+
   const [listaCitas, setListaCitas] = useState(
-    () => JSON.parse(localStorage.getItem("citas"))
+    () => JSON.parse(localStorage.getItem("listaCitas"))
     ||
     [] 
   )
 
-  const [ editando, setEditando ] = useState(false)
-  const [ citaActual, setCitaActual ] = useState({})
+
 
   useEffect(() => {
-    localStorage.setItem("citas", JSON.stringify(listaCitas))
+    localStorage.setItem("listaCitas", JSON.stringify(listaCitas))
   }, [listaCitas])
+
+  const [ editando, setEditando ] = useState(false)
+  const [ citaActual, setCitaActual ] = useState({})
 
   const eliminarCita = (id) => {
     setListaCitas(citasAntiguas => citasAntiguas.filter(cita => cita.id !== id))    
@@ -24,6 +28,7 @@ function App() {
 
   const editarCita = (id) => {
     setEditando(true)
+    console.log(`Editando cita ${id}`)
   }
 
 
