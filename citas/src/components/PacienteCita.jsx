@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PacienteCita({id, paciente, especie, propietario, email, motivo, fecha, eliminarCita, editarCita, citaActual}) {
+export default function PacienteCita({id, paciente, especie, propietario, email, motivo, fecha, eliminarCita, editarCita}) {
     let imageUrl = ""
     if (especie === "perro") {
         imageUrl = "./src/assets/dog.png"
@@ -12,7 +12,7 @@ export default function PacienteCita({id, paciente, especie, propietario, email,
     return (
         <div className="card w-70 mx-auto bg-white shadow-xl hover:shadow my-8">
             <img className="w-24 mx-auto rounded-full -mt-20 border-8 border-white" src={imageUrl} alt=""/>
-            <div className="text-center mt-2 text-3xl font-medium">{paciente}</div>
+            <div className="text-center mt-2 text-3xl text-sky-900 font-medium">{paciente}</div>
             <div className="text-center mt-2 font-normal text-lg">{propietario}</div>
             <div className="text-center font-light text-sm">{email}</div>
             <div className="px-6 text-center mt-2 font-light text-sm">
@@ -20,7 +20,10 @@ export default function PacienteCita({id, paciente, especie, propietario, email,
                     Sintomas: {motivo}
                 </p>
             <div className="mt-4 mb-1">
-                <span className="bg-gray-700 text-gray-200 text-sm font-medium mr-2 px-2.5 py-0.5">{fecha}</span>
+                <p className="pb-1 font-medium">
+                    Fecha
+                </p>
+                <span className="bg-sky-900 text-gray-200 text-sm font-medium mr-2 px-2.5 py-0.5">{fecha}</span>
                 
             </div>
             </div>

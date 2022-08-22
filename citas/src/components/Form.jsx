@@ -1,51 +1,36 @@
 import React, {useState, useEffect} from "react"
 import {nanoid} from "nanoid"
 
-export default function Form({listaCitas, setListaCitas, editando, setEditando, citaActual, setCitaActual}) {
+export default function Form({listaCitas, setListaCitas, editando, citaInfo, setCitaInfo}) {
     
-  const [ paciente, setPaciente ] = useState("")
-  const [ especie, setEspecie ] = useState("")
-  const [ propietario, setPropietario ] = useState("")
-  const [ email, setEmail ] = useState("")
-  const [ motivo, setMotivo ] = useState("")
-  const [ fecha, setFecha ] = useState("")
-  
-  
-  const cleanStates = () => {
-    setPaciente("")
-    setEspecie("")
-    setPropietario("")
-    setEmail("")
-    setMotivo("")
-    setFecha("")
+  const handleChange = (e) => {
+      const {name, value} = e.target;
+      setCitaInfo((prevInfo) => {
+        const newInfo = {
+          ...prevInfo,
+          id:nanoid(),
+          [name]:value,
+        }
+        return newInfo
+      }
+      )
+    }
+
+    const agregarCita = (citaInfo) => {
+      setListaCitas([...listaCitas, citaInfo])
+    }
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("Cita agendada");
+    agregarCita(citaInfo);
+    setCitaInfo({id: "", paciente:"", especie:"", propietario:"", email:"", motivo:"", fecha:""});
   }
 
-  const agendarCita = (e) => {
-    e.preventDefault()
-    const cita = ({
-      id: nanoid(),
-      paciente,
-      especie,
-      propietario, 
-      email,
-      motivo,
-      fecha
-    })
-    setListaCitas([...listaCitas, cita])
-    console.log('Cita guardada correctamente')
-    cleanStates()
-  }
-
-  const actualizarCita = (e) => {
-    e.preventDefault()
-    console.log("cita actualizada")
-    setEditando(false)
-    cleanStates()
-    setCitaActual({})
-  }
 
     return (
-        <form className="w-full max-w-lg" onSubmit={editando ? actualizarCita : agendarCita}>
+        <form className="w-full max-w-lg" onSubmit={handleSubmit}>
 
           <h2 className="text-center mt-2 text-white mt-4 mb-7 text-3xl font-medium">{editando ? "Editar cita" : "Agendar nueva cita"}</h2>          
 
@@ -60,8 +45,9 @@ export default function Form({listaCitas, setListaCitas, editando, setEditando, 
               id="paciente" 
               placeholder="Nombre del animal"
               name="paciente"
-              value={paciente}
-              onChange={(e)=>{setPaciente(e.target.value)}}
+              value={citaInfo.paciente}
+              //onChange={(e)=>{setPaciente(e.target.value)}}
+              onChange={handleChange}
               required
               className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"  
             />
@@ -79,8 +65,10 @@ export default function Form({listaCitas, setListaCitas, editando, setEditando, 
                                     type="radio" 
                                     id="perro" 
                                     value="perro"
-                                    checked={especie==="perro"}
-                                    onChange={(e)=>{setEspecie(e.target.value)}}
+                                    name="especie"
+                                    checked={citaInfo.especie==="perro"}
+                                    //onChange={(e)=>{setEspecie(e.target.value)}}
+                                    onChange={handleChange}
                                 />
                                 <label htmlFor="perro" className="mx-1 text-white">Perr@</label>
                             </div>
@@ -89,8 +77,10 @@ export default function Form({listaCitas, setListaCitas, editando, setEditando, 
                                     type="radio" 
                                     id="gato" 
                                     value="gato"
-                                    checked={especie==="gato"}
-                                    onChange={(e)=>{setEspecie(e.target.value)}}    
+                                    name="especie"
+                                    checked={citaInfo.especie==="gato"}
+                                    //onChange={(e)=>{setEspecie(e.target.value)}}
+                                    onChange={handleChange}    
                                 />
                                 <label htmlFor="gato" className="mx-1 text-white">Gat@</label>
                             </div>
@@ -99,8 +89,10 @@ export default function Form({listaCitas, setListaCitas, editando, setEditando, 
                                     type="radio" 
                                     id="otro"                                   
                                     value="otro"
-                                    checked={especie==="otro"}
-                                    onChange={(e)=>{setEspecie(e.target.value)}}
+                                    name="especie"
+                                    checked={citaInfo.especie==="otro"}
+                                    //onChange={(e)=>{setEspecie(e.target.value)}}
+                                    onChange={handleChange}
                                 />
                                 <label htmlFor="otro" className="mx-1 text-white">Otr@</label>
                             </div>
@@ -110,15 +102,16 @@ export default function Form({listaCitas, setListaCitas, editando, setEditando, 
           {/* Propietario */}
           <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
             <label className="block uppercase tracking-wide text-white text-xs font-bold mb-2" htmlFor="propietario">
-              Nombre responsable
+              Persona responsable
             </label>
             <input 
               type="text"
               id="propietario" 
-              placeholder="Persona responsable"
+              placeholder="Nombre y apellido"
               name="propietario"
-              onChange={(e)=>{setPropietario(e.target.value)}}
-              value={propietario}
+              //onChange={(e)=>{setPropietario(e.target.value)}}
+              onChange={handleChange}
+              value={citaInfo.propietario}
               required
               className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white" 
             />
@@ -134,8 +127,9 @@ export default function Form({listaCitas, setListaCitas, editando, setEditando, 
               id="email"
               placeholder="email@email.com"
               name="email"
-              value={email}
-              onChange={(e)=>{setEmail(e.target.value)}}
+              value={citaInfo.email}
+              //onChange={(e)=>{setEmail(e.target.value)}}
+              onChange={handleChange}
               required
               className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
             />
@@ -143,8 +137,8 @@ export default function Form({listaCitas, setListaCitas, editando, setEditando, 
               
         </div>
 
+        {/* Motivo */}
         <div className="flex flex-wrap -mx-3 mb-6">
-          {/* Motivo */}
                 <div className="w-full px-3">
                     <label 
                         className="block uppercase tracking-wide text-white text-xs font-bold mb-2" 
@@ -158,8 +152,9 @@ export default function Form({listaCitas, setListaCitas, editando, setEditando, 
                         cols="30" 
                         rows="5" 
                         placeholder="Sintomas"
-                        onChange={(e)=>{setMotivo(e.target.value)}}
-                        value={motivo}>
+                        //onChange={(e)=>{setMotivo(e.target.value)}}
+                        onChange={handleChange}
+                        value={citaInfo.motivo}>
                     </textarea>
                 </div>
 
@@ -172,8 +167,9 @@ export default function Form({listaCitas, setListaCitas, editando, setEditando, 
                   type="date" 
                   id="fecha" 
                   name="fecha"
-                  value={fecha}
-                  onChange={(e)=>{setFecha(e.target.value)}}
+                  value={citaInfo.fecha}
+                  //onChange={(e)=>{setFecha(e.target.value)}}
+                  onChange={handleChange}
                   required
                   className="appearance-none block w-full bg-gray-200 text-gray-700 border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"  
                   />

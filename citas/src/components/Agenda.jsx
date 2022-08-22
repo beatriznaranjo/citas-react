@@ -1,11 +1,12 @@
 import React from "react"
 import PacienteCita from './PacienteCita'
+import {nanoid} from 'nanoid'
 
-export default function Agenda({listaCitas, eliminarCita, editarCita, citaActual}) {
+export default function Agenda({listaCitas, citaInfo, eliminarCita, editarCita}) {
     const agenda = listaCitas.map((cita) => {
         return <PacienteCita
-                    key={cita.id}
-                    id={cita.id} 
+                    key={nanoid()}
+                    id={cita.id}
                     paciente={cita.paciente}
                     especie={cita.especie}
                     propietario={cita.propietario}
@@ -14,7 +15,7 @@ export default function Agenda({listaCitas, eliminarCita, editarCita, citaActual
                     fecha={cita.fecha}
                     eliminarCita={eliminarCita}
                     editarCita={editarCita}
-                    citaActual={citaActual}                 
+                    citaInfo={citaInfo}          
                     />
     })
 
