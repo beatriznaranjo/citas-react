@@ -42,11 +42,9 @@ function App() {
     console.log(`Editando cita ${id}`)  
     const x = listaCitas.filter(cita => cita.id===id)
     const citaActual = (x[0])
-    console.log("citaActual", citaActual)
     setCitaInfo(citaActual)
   }
 
-  console.log("citaInfo:", citaInfo)
 
 
   return (

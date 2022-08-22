@@ -21,9 +21,14 @@ export default function Form({listaCitas, setListaCitas, editando, setEditando, 
 
   const actualizarCita = (e) => {
     e.preventDefault()
-    console.log("Cita Actualizada")
+    const index = listaCitas.findIndex(cita => cita.id === citaInfo.id)
+    const citasTemp = [...listaCitas]
+    const nuevaInfo = {...citaInfo, [citaInfo.name]:e.target.value}
+    citasTemp[index] = nuevaInfo
+    setListaCitas(citasTemp)
     setEditando(false)
     setCitaInfo({id: "", paciente:"", especie:"", propietario:"", email:"", motivo:"", fecha:""})
+    console.log("Cita actualizada")
   }
   
 
