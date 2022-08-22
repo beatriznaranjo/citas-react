@@ -35,14 +35,19 @@ function App() {
 
   const [ editando, setEditando ] = useState(false)
 
+
+
   const editarCita = (id) => {
     setEditando(true)
-    console.log(`Editando cita ${id}`)
-    setCitaInfo(listaCitas.findIndex(
-      cita => cita.id === id
-    ))
-    console.log(citaInfo)  
+    console.log(`Editando cita ${id}`)  
+    const x = listaCitas.filter(cita => cita.id===id)
+    const citaActual = (x[0])
+    console.log("citaActual", citaActual)
+    setCitaInfo(citaActual)
   }
+
+  console.log("citaInfo:", citaInfo)
+
 
   return (
     <div className="App container flex-col m-auto">
@@ -53,12 +58,12 @@ function App() {
         <div className="bg-sky-900 aspect-square flex ">
                 <div className="m-auto">
                   <Form
-                  editando={editando}
                   listaCitas={listaCitas}
                   setListaCitas={setListaCitas}
                   citaInfo={citaInfo}
                   setCitaInfo={setCitaInfo}
-                  
+                  editando={editando}
+                  setEditando={setEditando}
                   />
                 </div>
         </div>
@@ -72,7 +77,6 @@ function App() {
           eliminarCita={eliminarCita}   
           editarCita={editarCita}
           citaInfo={citaInfo}
-
         />
         :
         <div>

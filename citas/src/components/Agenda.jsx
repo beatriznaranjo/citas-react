@@ -5,7 +5,7 @@ import {nanoid} from 'nanoid'
 export default function Agenda({listaCitas, citaInfo, eliminarCita, editarCita}) {
     const agenda = listaCitas.map((cita) => {
         return <PacienteCita
-                    key={nanoid()}
+                    key={cita.id}
                     id={cita.id}
                     paciente={cita.paciente}
                     especie={cita.especie}
@@ -15,7 +15,8 @@ export default function Agenda({listaCitas, citaInfo, eliminarCita, editarCita})
                     fecha={cita.fecha}
                     eliminarCita={eliminarCita}
                     editarCita={editarCita}
-                    citaInfo={citaInfo}          
+                    citaInfo={citaInfo}
+                              
                     />
     })
 
